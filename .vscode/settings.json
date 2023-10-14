@@ -1,0 +1,24 @@
+{
+ "workbench.colorCustomizations": {
+    "titleBar.activeBackground": "#4aa1c4",
+    "activityBarBadge.background": "#4aa1c4",
+  },
+  "workbench.colorTheme": "Solarized Light",
+  "editor.minimap.enabled": false,
+
+
+  "vim.hlsearch": true,
+  "vim.visualstar": true,
+  "vim.foldfix": true,
+  "vim.incsearch": true,
+
+  "vim.highlightedyank.enable"   : true,   
+  "vim.highlightedyank.color"    : "rgba(0   , 240 , 170 , 0.5)" , //yankした時の色
+
+  "vim.useSystemClipboard": true, // クリップボードを使用
+
+
+  // "vim.easymotion": true,
+  "vim.leader": "<space>",
+  // "vim.easymotionKeys": "sdfghjkl"
+}
