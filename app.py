@@ -5,22 +5,32 @@ import os
 import base64
 from dotenv import load_dotenv
 
+st.set_page_config(
+    layout = "wide",
+    page_title = "例え上手さん",
+
+)
+
+file_name = 'src/style.css'
+with open(file_name) as f:
+    st.markdown(f"<style>{f.read()}</style>", unsafe_allow_html=True)
+
 load_dotenv()
+
+left, right =  st.columns(2)
 
 def add_bg_from_local(image_file):
     with open(image_file, "rb") as image_file:
         encoded_string = base64.b64encode(image_file.read())
-    st.markdown(
+    right.markdown(
     f"""
     <style>
         .stApp {{
-          background: linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)),
+          background: linear-gradient(rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.1)),
           url(data:image/{"png"};base64,{encoded_string.decode()});
-          top:0%;
-        #   background-size: cover;
           background-repeat: no-repeat;
-          background-position: bottom;
-          justify-content: center;
+          right:0%;
+          background-position: right;
           display: flex;
           animation: fadeOut 4s;
         }}
@@ -29,19 +39,16 @@ def add_bg_from_local(image_file):
     unsafe_allow_html=True
     )
 
-
 # OpenAIのAPIキーを設定
 openai.api_key = os.getenv("OPENAI_API_KEY")
 
 # print(openai_api_key))
-st.header("例え上手さん")
+left.header("例え上手さん")
 add_bg_from_local('static/background.png')  
 
 
-# インプット欄の作成
-
 # 送信ボタンとClearボタンを横並びに配置
-col1, col2, col3, col4 = st.columns(4)
+col1, col2, col3, col4 = left.columns(4)
 
 word_to_explain = col1.text_input("説明してほしい単語", value="", placeholder="相対性理論")
 example_word = col2.text_input("例えてほしい身近なもの", value="", placeholder="漫画ワンピース")
@@ -65,10 +72,10 @@ if is_submit:
             messages=[
                 {"role": "user", "content": prompt}],
         )
-        st.write(response.choices[0].message.content)
+        left.write(response.choices[0].message.content)
 
 else:
-    st.write("説明文がここに表示されます。")
+    left.write("説明文がここに表示されます。")
 
 
 # class SimpleStreamlitCallbackHandler(BaseCallbackHandler):

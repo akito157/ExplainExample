@@ -1,0 +1,6 @@
+[data-testid="stSidebar"] {
+    display: none;
+}
+[data-testid="stHeader"] {
+    display: none;
+}
