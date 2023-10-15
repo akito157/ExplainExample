@@ -1,6 +1,50 @@
 [data-testid="stSidebar"] {
     display: none;
 }
+
 [data-testid="stHeader"] {
     display: none;
+}
+
+.text_container {
+  position: fixed;         /* 位置を固定 */
+  top: 0%;
+  left: 0%;
+  width: 60%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.7); /* 背景色は黒、30%の透過をさせる */
+  padding: 0% 0% 0% 0%;
+}
+
+
+.stop_container {
+  position: fixed;         /* 位置を固定 */
+  top: 0%;
+  left: 0%;
+  width: 60%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.7); /* 背景色は黒、30%の透過をさせる */
+  padding: 0% 0% 0% 0%;
+}
+
+
+.student_container {
+  position: fixed;         /* 位置を固定 */
+  top: 0%;
+  right: 20%;
+  width: 20%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.8); /* 背景色は黒、30%の透過をさせる */
+  padding: 0% 0% 0% 0%;
+}
+
+
+.teacher_container {
+  position: fixed;         /* 位置を固定 */
+  top: 0%;
+  right: 0%;
+  width: 20%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.8); /* 背景色は黒、30%の透過をさせる */
+  padding: 0% 0% 0% 0%;
 }

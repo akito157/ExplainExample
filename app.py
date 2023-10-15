@@ -17,7 +17,8 @@ with open(file_name) as f:
 
 load_dotenv()
 
-left, right =  st.columns(2)
+# left, right =  st.columns([3,2])
+left, right =  st.columns([3,2])
 
 def add_bg_from_local(image_file):
     with open(image_file, "rb") as image_file:
@@ -31,6 +32,7 @@ def add_bg_from_local(image_file):
           background-repeat: no-repeat;
           right:0%;
           background-position: right;
+          background-size:40%, 40%;
           display: flex;
           animation: fadeOut 4s;
         }}
@@ -42,7 +44,7 @@ def add_bg_from_local(image_file):
 # OpenAIのAPIキーを設定
 openai.api_key = os.getenv("OPENAI_API_KEY")
 
-# print(openai_api_key))
+text_container = left.markdown(f'<div class="text_container"></div>', unsafe_allow_html=True)
 left.header("例え上手さん")
 add_bg_from_local('static/background.png')  
 
@@ -50,7 +52,7 @@ add_bg_from_local('static/background.png')
 # 送信ボタンとClearボタンを横並びに配置
 col1, col2, col3, col4 = left.columns(4)
 
-word_to_explain = col1.text_input("説明してほしい単語", value="", placeholder="相対性理論")
+word_to_explain = col1.text_input("説明してほしいこと", value="", placeholder="相対性理論")
 example_word = col2.text_input("例えてほしい身近なもの", value="", placeholder="漫画ワンピース")
 
 is_submit = col3.button("送信")
@@ -60,12 +62,16 @@ if is_clear:
     st.experimental_rerun()  # Streamlitのセッションをリセット
 
 
+teacher_container = left.markdown(f'<div class="teacher_container"></div>', unsafe_allow_html=True)
 if is_submit:
+    teacher_container.empty()
+    stop_container = left.markdown(f'<div class="stop_container"></div>', unsafe_allow_html=True)
+    student_container = left.markdown(f'<div class="student_container"></div>', unsafe_allow_html=True)
     # ぐるぐるのアニメーションを表示
     with st.spinner("説明考え中..."):
         sleep(2)  # 2秒待機
 
-        prompt = f"{word_to_explain}について、{example_word}に例えて説明してください。"
+        prompt = f"{word_to_explain}について、{example_word}に例えて、説明してください。"
         response = openai.ChatCompletion.create(
             model="gpt-4",
             temperature=0.5,
@@ -73,35 +79,9 @@ if is_submit:
                 {"role": "user", "content": prompt}],
         )
         left.write(response.choices[0].message.content)
+    stop_container.empty()
+    student_container.empty()
 
 else:
     left.write("説明文がここに表示されます。")
 
-
-# class SimpleStreamlitCallbackHandler(BaseCallbackHandler):
-#     """ Copied only streaming part from StreamlitCallbackHandler """
-    
-#     def __init__(self) -> None:
-#         self.tokens_area = st.empty()
-#         self.tokens_stream = ""
-        
-#     def on_llm_new_token(self, token: str, **kwargs: Any) -> None:
-#         """Run on new LLM token. Only available when streaming is enabled."""
-        
-#         token = token.replace('\n\n', '\n')
-#         token = token.replace('\n', '  \n')
-        
-#         if token==' ':
-#             print('space')
-#         if token=='\n':
-#             print('n')
-#         # if token=='\n\n':
-#             # print('nn')
-
-#         if len(token)>1:
-#             for s in token:
-#                 self.tokens_stream += s
-#                 self.tokens_area.markdown(self.tokens_stream)
-#         else:
-#             self.tokens_stream += token
-#             self.tokens_area.markdown(self.tokens_stream)
