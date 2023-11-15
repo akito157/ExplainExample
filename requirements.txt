@@ -1,8 +1,7 @@
-langchain
 pandas
 numpy
 streamlit
-openai
+openai==0.28.1
 faiss-cpu
 tiktoken
 python-dotenv
